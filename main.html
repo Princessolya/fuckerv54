@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wolfmare Web Pair</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(45deg, #ff5f6d, #ffc3a0, #6a82fb, #fc5c7d, #ff9a8b);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      font-size: 12px;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .header {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      border-bottom: 2px solid white;
+      padding-bottom: 10px;
+    }
+
+    .profile-picture {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    /* 3D Button Styles */
+    .btn-container {
+      margin-top: 30px; /* Space between the header and buttons */
+    }
+
+    .btn {
+      width: 200px;
+      padding: 12px;
+      margin: 10px;
+      background-color: #222;
+      border-radius: 25px;
+      border: 2px solid #fff;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    /* 3D Button Effect */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      height: 200%;
+      width: 200%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(45deg);
+      transition: all 0.3s;
+    }
+
+    .btn:hover::before {
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: #333;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(255, 255, 255, 0.6);
+      transform: translateY(-6px); /* 3D lift effect */
+    }
+
+    .btn:active {
+      background-color: #000;
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+      transform: translateY(2px); /* Button presses down */
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+        width: 80%;
+        max-width: none;
+      }
+
+      .header {
+        font-size: 20px;
+      }
+
+      .social-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .profile-picture {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.innerHTML = "❄";
+      document.body.appendChild(snowflake);
+
+      let size = Math.random() * 10 + 10;
+      let startPosition = Math.random() * window.innerWidth;
+
+      snowflake.style.left = startPosition + "px";
+      snowflake.style.fontSize = size + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    setInterval(createSnowflake, 150);
+  </script>
+
+  <div class="container">
+    <img src="https://raw.githubusercontent.com/Princessolya/fuck-db/refs/heads/main/Session%20success.jpg" class="profile-picture">
+    <p>-------</p>
+    <div class="header">Wolfmare Web Pair</div>
+    <p>Enter your number with country code to get the pairing code.</p>
+
+    <!-- Horizontal line -->
+    <hr style="border: 1px solid #fff; width: 60%; margin: 20px auto;">
+
+    <!-- 3D Buttons -->
+    <div class="btn-container">
+      <button onclick="window.open(`/qr`)" class="btn">QR Code</button>
+      <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
+      <button onclick="window.open(`https://wa.me/0779912589?text=Hello%20from%20Web%20Pair`)" class="btn">Owner</button>
+      <button onclick="window.open(`https://chat.whatsapp.com/BagwKoTMIffFpa8KjpCmEn`)" class="btn">Support Group</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      © 2025 Wolfmare Web Pair. All rights reserved.
+    </div>
+  </div>
+
+</body>
+</html>

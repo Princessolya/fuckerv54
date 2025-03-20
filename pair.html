@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wolfmare Web Pair</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Background with Animated Gradient */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(45deg, #ff5f6d, #ffc3a0, #6a82fb, #fc5c7d, #ff9a8b);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Snow Effect */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      font-size: 12px;
+      user-select: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    /* Main Container with 3D Effect */
+    .container {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 350px;
+      transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+      transition: transform 0.3s ease-in-out;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .container:hover {
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    }
+
+    /* Profile Picture */
+    .profile-picture {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Header */
+    .header {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      border-bottom: 2px solid white;
+      padding-bottom: 10px;
+      animation: slideIn 1s ease-out;
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Text Styling */
+    p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    /* Input & Button Styling */
+    .input-container {
+      display: flex;
+      background: #222;
+      border-radius: 8px;
+      padding: 5px;
+      gap: 5px;
+      align-items: center;
+      border: 1px solid #444;
+    }
+
+    .input-container input {
+      flex-grow: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: #fff;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .input-container input::placeholder {
+      color: #999;
+    }
+
+    .input-container button {
+      padding: 12px;
+      background: white;
+      color: black;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+      animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0);
+      }
+      60% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .input-container button:hover {
+      background: #ccc;
+    }
+
+    /* Loading Spinner */
+    #loading-spinner {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .fa-spinner {
+      font-size: 24px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Pairing Code Section */
+    #pair {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    #copy {
+      cursor: pointer;
+      color: #0f8;
+    }
+
+    #copy:hover {
+      color: #0ff;
+    }
+
+    /* Social Media Buttons */
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-buttons a {
+      text-decoration: none;
+      font-size: 20px;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    .social-buttons a:hover {
+      color: #0ff;
+    }
+
+    /* Copyright Message */
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ccc;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Snow Effect -->
+  <script>
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.innerHTML = "❄";
+      document.body.appendChild(snowflake);
+
+      let size = Math.random() * 10 + 10;
+      let startPosition = Math.random() * window.innerWidth;
+
+      snowflake.style.left = startPosition + "px";
+      snowflake.style.fontSize = size + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    setInterval(createSnowflake, 150);
+  </script>
+
+  <div class="container">
+    <!-- Profile Picture -->
+    <img src="https://raw.githubusercontent.com/Princessolya/fuck-db/refs/heads/main/Session%20success.jpg" class="profile-picture">
+
+    <p>-------</p>
+    <div class="header">Wolfmare Web Pair</div>
+    <p>Enter your number with country code to get the pairing code.</p>
+
+    <div class="input-container">
+      <input type="number" id="number" placeholder="+94779912589">
+      <button id="submit">Submit</button>
+    </div>
+
+    <div id="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <div id="pair"></div>
+
+    <!-- Social Media Links -->
+    <div class="social-buttons">
+      <a href="https://facebook.com" target="_blank" class="fab fa-whatsapp"></a>
+      <a href="https://twitter.com" target="_blank" class="fab fa-youtube"></a>
+      <a href="https://instagram.com" target="_blank" class="fab fa-tiktok"></a>
+    </div>
+
+    <!-- Footer with Copyright -->
+    <div class="footer">
+      © 2025 Wolfmare Web Pair. All rights reserved.
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+    let box = document.getElementById("box");
+
+    async function Copy() {
+      let text = document.getElementById("copy").innerText;
+      let obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
+      obj.innerText = "✔️ COPIED";
+      obj.style = "color:blue;font-weight:bold";
+      obj.size = "5";
+      setTimeout(() => {
+        obj.innerText = text;
+        obj.style = "color:white;font-weight-bold";
+        obj.size = "5";
+      }, 500);
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (!c.value) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">❗Enter your whatsapp number with country code.</a><br><br>';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<a style="color:black;font-weight:bold">❗Invalid number format. Please try again.</a><br><br>';
+      } else {
+        const bc = c.value.replace(/[^0-9]/g, "");
+        let bb = "";
+        let bbc = "";
+        const cc = bc.split('');
+        cc.map(a => {
+          bbc += a;
+          if (bbc.length == 3) {
+            bb += " " + a;
+          } else if (bbc.length == 8) {
+            bb += " " + a;
+          } else {
+            bb += a;
+          }
+        });
+        c.type = "text";
+        c.value = "+" + bb;
+        c.style = "color:white;font-size:20px";
+        // Show the loading spinner
+        document.getElementById("loading-spinner").style.display = "block";
+        a.innerHTML = ''; // Clear the previous content
+        let { data } = await axios(`/code?number=${bc}`);
+        let code = data.code || "❗ Service Unavailable";
+        a.innerHTML = '<font id="copy" onclick="Copy()" style="color:blue;font-weight:bold" size="5">CODE: <span style="color:black;font-weight:bold">' + code + '</span></font><br><br><br>';
+        // Hide the loading spinner when the process is complete
+        document.getElementById("loading-spinner").style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
